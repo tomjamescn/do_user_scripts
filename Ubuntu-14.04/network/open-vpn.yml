@@ -5,6 +5,11 @@ packages:
   - easy-rsa
   - curl
 runcmd:
+  #init local and timezone
+  locale-gen zh_CN.UTF-8
+  dpkg-reconfigure tzdata
+
+  #
   - IPADDR=$(curl -s http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address)
   - gunzip -c /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz > /etc/openvpn/server.conf
   - sed -ie 's/dh dh1024.pem/dh dh2048.pem/' /etc/openvpn/server.conf
@@ -63,3 +68,5 @@ runcmd:
   - cp /etc/openvpn/easy-rsa/keys/client1.crt /root/
   - cp /etc/openvpn/easy-rsa/keys/client1.key /root/
   - cp /etc/openvpn/easy-rsa/keys/ca.crt /root/
+  
+
