@@ -7,7 +7,8 @@ packages:
 runcmd:
   #init local and timezone
   - locale-gen zh_CN.UTF-8
-  - dpkg-reconfigure tzdata
+  - rm /etc/localtime
+  - ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
   
   #pptp vpn server init
   - wget https://raw.github.com/viljoviitanen/setup-simple-pptp-vpn/master/setup.sh
