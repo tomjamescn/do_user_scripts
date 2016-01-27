@@ -6,10 +6,15 @@ packages:
   - curl
 runcmd:
   #init local and timezone
-  locale-gen zh_CN.UTF-8
-  dpkg-reconfigure tzdata
+  - locale-gen zh_CN.UTF-8
+  - dpkg-reconfigure tzdata
+  
+  #pptp vpn server init
+  - wget https://raw.github.com/viljoviitanen/setup-simple-pptp-vpn/master/setup.sh
+  #pptp username and password is in file below
+  - sh setup.sh > /root/pptp_vpn_server_install_log
 
-  #
+  #open vpn server init
   - IPADDR=$(curl -s http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address)
   - gunzip -c /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz > /etc/openvpn/server.conf
   - sed -ie 's/dh dh1024.pem/dh dh2048.pem/' /etc/openvpn/server.conf
